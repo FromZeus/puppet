@@ -32,20 +32,9 @@ class zookeeper {
       ensure => installed,
     } ->
 
-    file { 'zookeeper_bash':
-      ensure => 'file',
-      source => 'puppet:///modules/zookeeper/zookeeper.sh',
-      path => '/usr/local/bin/zookeeper.sh',
-      owner => root,
-      group => root,
-      mode => '0755',
-      notify => Exec['install_zookeeper'],
-    } ->
-
-    exec { 'install_zookeeper':
-      #require => Package['java-1.6.0-openjdk.x86_64'],
-      command => '/usr/local/bin/zookeeper.sh',
-      refreshonly => true,
+    zookeeper::zoorpm { 'zoorpm':
+      zoo_source => 'ftp://rpmfind.net/linux/fedora/linux/development/rawhide/x86_64/os/Packages/z/zookeeper-3.4.6-2.fc22.x86_64.rpm',
+      zoo_name => 'zookeeper-3.4.6',
     }
   }
 }
